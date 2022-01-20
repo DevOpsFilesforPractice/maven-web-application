@@ -1,6 +1,6 @@
 pipeline{
     agent {
-        'wallmart-node'
+        label 'wallmart-node'
     }
     tools{
         maven "maven3.8.2"
