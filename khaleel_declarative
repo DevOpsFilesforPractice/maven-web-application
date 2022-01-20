@@ -5,6 +5,7 @@ pipeline{
     }
     options{
         properties([pipelineTriggers([githubPush()])])
+        properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))])
     }
     stages{
         stage('checkoutCode'){
