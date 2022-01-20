@@ -1,0 +1,26 @@
+node {
+    def mavenHome = tool name: "maven3.8.2"
+    stage('checkoutcode'){
+        git branch: 'development', credentialsId: 'git', url: 'https://github.com/DevOpsFilesforPractice/maven-web-application.git'
+    }
+    stage('build'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    stage('sonarQubeReport'){
+        sh "${mavenHome}/bin/mvn clean sonar:sonar"
+    }
+    stage('uploadArtifactIntoNexus'){
+        sh "${mavenHome}/bin/mvn clean deploy"
+    }
+    stage('deployIntoTomcat'){
+        sshagent(['3324cf23-5a17-4cf3-8f5f-02eb31db1464']) {
+            sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.232.59.160:/opt/apache-tomcat-9.0.56/webapps"
+        }
+    }
+    stage(SendEmailNotification){
+        mail bcc: 'khaleelbashak25@gmail.com', body: '''build over!!
+
+regards,
+khaleel.''', cc: 'khaleelbashak25@gmail.com', from: '', replyTo: '', subject: 'build over!!', to: 'khaleelbashak25@gmail.com'
+    }
+}
