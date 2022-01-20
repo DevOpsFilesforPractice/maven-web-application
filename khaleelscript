@@ -18,7 +18,7 @@ node {
         }
     }
     stage(SendEmailNotification){
-        mail bcc: 'khaleelbashak25@gmail.com', body: '''build over!!
+        mail bcc: 'khaleelbashak25@gmail.com', body: '''build success!!
 
 regards,
 khaleel.''', cc: 'khaleelbashak25@gmail.com', from: '', replyTo: '', subject: 'build over!!', to: 'khaleelbashak25@gmail.com'
