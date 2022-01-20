@@ -4,10 +4,10 @@ pipeline{
         maven "maven3.8.2"
     }
     options{
-        properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))])
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))
     }
     triggers{
-        properties([pipelineTriggers([githubPush()])])
+        pipelineTriggers([githubPush()])
     }
     stages{
         stage('checkoutCode'){
