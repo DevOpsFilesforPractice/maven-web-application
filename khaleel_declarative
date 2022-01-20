@@ -1,0 +1,52 @@
+pipeline{
+    agent any
+    tools{
+        maven "maven3.8.2"
+    }
+    options{
+        properties([pipelineTriggers([githubPush()])])
+    }
+    stages{
+        stage('checkoutCode'){
+            steps{
+            git branch: 'development', credentialsId: 'git', url: 'https://github.com/DevOpsFilesforPractice/maven-web-application.git'
+            }
+        }
+        stage('Build'){
+            steps{
+            sh "mvn clean package"
+            }
+        }
+        stage('sonarQubeReports'){
+            steps{
+                sh "mvn clean sonar:sonar"
+            }
+        }
+        stage('uploadArtifactIntoNexus'){
+            steps{
+                sh "mvn clean deploy"
+            }
+        }
+        stage('DeployApp'){
+            steps{
+                sshagent(['3324cf23-5a17-4cf3-8f5f-02eb31db1464']) {
+                    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.232.59.160:/opt/apache-tomcat-9.0.56/webapps"
+                }
+            }
+        }
+    }
+    post{
+        success{
+            mail bcc: 'khaleelbashak25@gmail.com', body: '''Build success....
+            
+            thanks regards
+            k khaleel''', cc: 'khaleelbashak25@gmail.com', from: '', replyTo: '', subject: 'Build success!!', to: 'khaleelbashak25@gmail.com'
+        }
+        failure{
+            mail bcc: 'khaleelbashak25@gmail.com', body: '''Build Failure....
+            
+            thanks regards
+            k khaleel''', cc: 'khaleelbashak25@gmail.com', from: '', replyTo: '', subject: 'Build Failure!!', to: 'khaleelbashak25@gmail.com'
+        }
+    }
+}
