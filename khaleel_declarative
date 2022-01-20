@@ -39,7 +39,7 @@ pipeline{
             }
         }
     }
-    post{
+    /*post{
         success{
             mail bcc: 'khaleelbashak25@gmail.com', body: '''Build success....
             
@@ -52,5 +52,5 @@ pipeline{
             thanks regards
             k khaleel''', cc: 'khaleelbashak25@gmail.com', from: '', replyTo: '', subject: 'Build Failure!!', to: 'khaleelbashak25@gmail.com'
         }
-    }
+    }*/
 }
