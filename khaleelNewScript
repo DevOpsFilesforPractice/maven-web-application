@@ -1,0 +1,26 @@
+node{
+    def mavenHome = tool name: "Maven3.6.2"
+    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '3', daysToKeepStr: '', numToKeepStr: '3')), pipelineTriggers([pollSCM('* * * * *')])])
+    stage('checkOutCode'){
+        git branch: 'development', credentialsId: '6db5d42b-8bec-422b-a37e-1c83e68e9706', url: 'https://github.com/DevOpsFilesforPractice/maven-web-application.git'
+    }
+    stage('Build'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    /*stage('ExecuteSonarcubeReports'){
+        sh "${mavenHome}/bin/mvn clean sonar:sonar"
+    }
+    stage('UploadArtifactintoNexus'){
+        sh "${mavenHome}/bin/mvn clean deploy"
+    }*/
+    stage('DeployAppIntoTomcat'){
+        sshagent(['1dfdff6d-9143-4fe4-975e-229c878e3740']) {
+            sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@15.207.114.103:/opt/apache-tomcat-9.0.73/webapps"
+        }
+    }
+    /*stage('Sendemail'){
+        mail bcc: '', body: '''Build success
+        regards
+        khaleel''', cc: '', from: '', replyTo: '', subject: 'Buildsuccess.....', to: 'khaleel.ka2534@gmail.com'
+    }*/
+}
