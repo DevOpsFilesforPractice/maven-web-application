@@ -1,0 +1,15 @@
+node{
+    def mavenHome = tool name:"Maven3.6.2"
+    
+    stage('checkoutcode'){
+        git branch: 'development', credentialsId: '6db5d42b-8bec-422b-a37e-1c83e68e9706', url: 'https://github.com/DevOpsFilesforPractice/maven-web-application.git'
+    }
+    stage('build'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    stage('DeployTheAppIntoTomcat'){
+        sshagent(['3f4eca5d-21ae-4e15-a69a-bb4f07a24e84']) {
+            sh"scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@15.207.114.103:/opt/apache-tomcat-9.0.73/webapps"
+        }
+    }
+}
