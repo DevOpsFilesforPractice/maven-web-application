@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1 align="center">Welcome tooo khaleel... </h1>
-<h1 align="center"> Some fake guys are giving the fake reviews dont believe those guys..I am requesting everyone. Please give your reviews in FB and Google.</h1>
+<h1 align="center"> I am requesting everyone. Please give your reviews in FB and Google.</h1>
 <hr>
 <div style="text-align: center;">
 	<span>
