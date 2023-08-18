@@ -1,7 +1,7 @@
 node
 {
     def mavenHome=tool name: "maven3.6.2"
-    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5')), pipelineTriggers([cron('*/5 * * * *')])])
+    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5'))])
     
     stage('checkoutCode'){
         git branch: 'development', credentialsId: 'e4d0b5a4-47b2-4af1-a265-e6eca834b121', url: 'https://github.com/DevOpsFilesforPractice/maven-web-application.git'
