@@ -9,7 +9,7 @@
 </head>
 </head>
 <body>
-<h1 align="center">Welcome tooo khaleel... </h1>
+<h1 align="center">Welcome to khaleel... </h1>
 <h1 align="center"> I am requesting everyone. Please give your reviews in FB and Google.</h1>
 <hr>
 <div style="text-align: center;">
